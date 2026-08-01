@@ -22,11 +22,6 @@ local lipoCurve = {
 -- Cached telemetry source names to avoid expensive lookups in the render loop
 local cachedRssiName = nil
 
-local voltHistory = {}
-local voltHistoryIdx = 1
-local lastVoltTime = 0
-local voltSum = 0
-local voltCount = 0
 local smoothedVoltage = 0
 
 -- --- HELPER FUNCTIONS ---
@@ -213,8 +208,6 @@ local function run(event)
   -- Battery voltage processing
   -- Exponential Moving Average (EMA) to smooth out voltage fluctuations
   local mainVolts = getValue(SENSOR_MAIN_BAT_VOLT) or 0
-  local now = getTime()
-  local smoothedVoltage = 0
   local filterFactor = 0.05 -- Range 0.0 to 1.0. Lower = smoother/slower.
 
   if mainVolts > 0 then
